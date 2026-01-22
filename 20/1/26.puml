@@ -1,0 +1,15 @@
+@startuml
+class application.Main {
++ {static} void main(String[])
+}
+
+class application.GameManager {
++ {static} GameManager gameManager
+- Player player
++ {static} GameManager getInstance()
++ Player getPlayer()
++ void setPlayer(Player)
+}
+
+
+@enduml

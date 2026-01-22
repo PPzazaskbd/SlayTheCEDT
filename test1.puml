@@ -1,0 +1,96 @@
+@startuml
+enum logic.EnemyIntentType {
++  ATTACK
++  BLOCK
+}
+
+enum logic.Rarity {
++  ATTACK
++  SKILL
++  POWER
+}
+
+class logic.AttackCard {
+}
+class logic.Player {
+~ String name
+~ {static} int hp
+~ {static} int maxhp
+~ {static} int currentEnergy
+~ {static} int maxEnergy
+~ {static} int block
+~ {static} int gold
+~ {static} ArrayList<Card> deck
+~ void setBeginCard()
++ String toString()
++ String getName()
++ void setName(String)
++ {static} int getHp()
++ {static} void setHp(int)
++ {static} int getMaxhp()
++ {static} void setMaxhp(int)
++ {static} int getCurrentEnergy()
++ {static} void setCurrentEnergy(int)
++ {static} int getMaxEnergy()
++ {static} void setMaxEnergy(int)
++ {static} int getBlock()
++ {static} void setBlock(int)
++ {static} int getGold()
++ {static} void setGold(int)
++ {static} ArrayList<Card> getDeck()
++ {static} void setDeck(ArrayList<Card>)
+}
+
+
+class logic.Card {
+# int cost
+# String name
+# String description
+# Rarity rarity
+# CardType cardType
++ void execute()
++ String toString()
+}
+
+
+class logic.EnemyIntent {
+~ EnemyIntentType enemyIntentType
+~ int count
+~ String intentMessage
++ EnemyIntentType getEnemyIntentType()
++ void setEnemyIntentType(EnemyIntentType)
++ int getCount()
++ void setCount(int)
++ String getIntentMessage()
++ void setIntentMessage(String)
++ String toString()
+}
+
+
+enum logic.CardType {
++  COMMON
++  UNCOMMON
++  RARE
+}
+
+class logic.Enemy {
+~ String name
+~ int hp
+~ int maxHp
+~ ArrayList<EnemyIntent> enemyIntentPattern
++ void setBeginPattern()
++ String toString()
+}
+
+
+class logic.SkillCard {
+# int block
++ void execute()
+}
+
+
+
+
+logic.Card <|-- logic.AttackCard
+logic.Card <|-- logic.SkillCard
+@enduml

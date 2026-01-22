@@ -1,0 +1,111 @@
+@startuml
+class application.Main {
++ {static} void main(String[])
+}
+
+enum logic.EnemyIntentType {
++  ATTACK
++  BLOCK
+}
+
+enum logic.Rarity {
++  COMMON
++  UNCOMMON
++  RARE
+}
+
+class logic.AttackCard {
+~ int damage
+}
+
+class logic.Player {
+~ String name
+~ int hp
+~ int maxhp
+~ int currentEnergy
+~ int maxEnergy
+~ int block
+~ int gold
+~ ArrayList<Card> deck
+~ void setBeginCard()
++ String toString()
++ String getName()
++ void setName(String)
++ int getHp()
++ void setHp(int)
++ int getMaxhp()
++ void setMaxhp(int)
++ int getCurrentEnergy()
++ void setCurrentEnergy(int)
++ int getMaxEnergy()
++ void setMaxEnergy(int)
++ int getBlock()
++ void setBlock(int)
++ int getGold()
++ void setGold(int)
++ ArrayList<Card> getDeck()
++ void setDeck(ArrayList<Card>)
+}
+
+
+class logic.Card {
+# int cost
+# String name
+# String description
+# Rarity rarity
+# CardType cardType
++ void execute()
++ String toString()
+}
+
+
+class logic.EnemyIntent {
+~ EnemyIntentType enemyIntentType
+~ int count
+~ String intentMessage
++ EnemyIntentType getEnemyIntentType()
++ void setEnemyIntentType(EnemyIntentType)
++ int getCount()
++ void setCount(int)
++ String getIntentMessage()
++ void setIntentMessage(String)
++ String toString()
+}
+
+
+enum logic.CardType {
++  ATTACK
++  SKILL
++  POWER
+}
+
+class application.GameManager {
++ {static} GameManager gameManager
+- Player player
++ {static} GameManager getInstance()
++ Player getPlayer()
++ void setPlayer(Player)
+}
+
+
+class logic.Enemy {
+~ String name
+~ int hp
+~ int maxHp
+~ ArrayList<EnemyIntent> enemyIntentPattern
++ void setBeginPattern()
++ String toString()
+}
+
+
+class logic.SkillCard {
+# int block
++ void execute()
+}
+
+
+
+
+logic.Card <|-- logic.AttackCard
+logic.Card <|-- logic.SkillCard
+@enduml
