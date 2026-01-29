@@ -1,7 +1,7 @@
 package application;
 
-import Unit.Enemy;
-import Unit.Player;
+import unit.Enemy;
+import unit.Player;
 
 
 public class Main {

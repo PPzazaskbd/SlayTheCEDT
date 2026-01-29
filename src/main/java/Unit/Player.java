@@ -1,4 +1,4 @@
-package Unit;
+package unit;
 
 import logic.card.Card;
 import logic.card.CardType;

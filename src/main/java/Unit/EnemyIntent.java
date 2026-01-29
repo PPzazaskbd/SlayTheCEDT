@@ -1,4 +1,4 @@
-package Unit;
+package unit;
 
 public class EnemyIntent {
     EnemyIntentType enemyIntentType;
