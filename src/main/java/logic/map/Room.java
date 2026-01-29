@@ -1,14 +1,20 @@
 package logic.map;
 
 public class Room {
-    public final Pair<Integer,Integer> roomCoordinate;
-    private final int floor;
-    private final RoomType type;
+    public  Pair<Integer,Integer> roomCoordinate;
+    private  int floor;
+    private  RoomType type;
 
-    public Room(int l, int r, RoomType type) {
+    public Room(int l, int r) {
         this.roomCoordinate = new Pair<>(l,r);
         this.floor = l+r;
-        this.type = type;
+        this.type = RoomType.COMBAT;
+    }
+
+    public Room(int l, int r,RoomType roomType) {
+        this.roomCoordinate = new Pair<>(l,r);
+        this.floor = l+r;
+        this.type = roomType;
     }
 
     public Pair<Integer, Integer> getRoomCoordinate() {
@@ -30,5 +36,17 @@ public class Room {
                 ", floor=" + floor +
                 ", type=" + type +
                 '}';
+    }
+
+    public void setRoomCoordinate(Pair<Integer, Integer> roomCoordinate) {
+        this.roomCoordinate = roomCoordinate;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public void setType(RoomType type) {
+        this.type = type;
     }
 }
