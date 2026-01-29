@@ -1,4 +1,4 @@
-package logic;
+package logic.card;
 
 public class PowerCard {
 }

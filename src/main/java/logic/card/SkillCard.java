@@ -1,9 +1,6 @@
-package logic;
+package logic.card;
 
 import application.GameManager;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SkillCard extends  Card{
     protected int block;

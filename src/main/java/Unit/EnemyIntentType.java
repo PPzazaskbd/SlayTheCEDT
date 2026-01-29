@@ -1,4 +1,4 @@
-package Unit;
+package unit;
 
 public enum EnemyIntentType {
     ATTACK,BLOCK

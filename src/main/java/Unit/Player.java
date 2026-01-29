@@ -1,9 +1,9 @@
 package Unit;
 
-import logic.Card;
-import logic.CardType;
-import logic.Rarity;
-import logic.SkillCard;
+import logic.card.Card;
+import logic.card.CardType;
+import logic.card.Rarity;
+import logic.card.SkillCard;
 
 import java.util.ArrayList;
 import java.util.Collections;

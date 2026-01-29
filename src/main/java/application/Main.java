@@ -20,5 +20,6 @@ public class Main {
         }
         Enemy FD_battery = new Enemy("FD battery",23,23);
             System.out.println(FD_battery);
+
     }
 }
