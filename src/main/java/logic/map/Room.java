@@ -1,12 +1,12 @@
 package logic.map;
 
 public class Room {
-    public  Pair<Integer,Integer> roomCoordinate;
-    private  int floor;
+    private   int leftCoordinate;
+    private int rightCoordinate;
     private  RoomType type;
 
     public Room(int l, int r) {
-        this.roomCoordinate = new Pair<>(l,r);
+        this.leftCoordinate = ;
         this.floor = l+r;
         this.type = RoomType.COMBAT;
     }
