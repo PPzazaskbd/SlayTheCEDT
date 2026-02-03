@@ -1,0 +1,248 @@
+@startuml
+class application.Main {
++ {static} void main(String[])
+}
+
+class logic.map.Map {
+- HashMap<Pair<Integer,Integer>,Room> rooms
+- Pair<Integer,Integer> currentRoom
++ Room walk(Direction)
++ boolean addRoom(Room)
++ Room getCurrentRoom()
+- void generateMap()
++ Room getRoomAt(int,int)
+- ArrayList<Enemy> createEnemies(int)
+}
+
+
+class logic.map.Room {
+- int leftCoordinate
+- int rightCoordinate
+- RoomType roomType
+- List<Enemy> Enemys
++ int getFloor()
++ int getLeftCoordinate()
++ int getRightCoordinate()
++ RoomType getRoomType()
++ List<Enemy> getEnemys()
+}
+
+
+class unit.EnemyIntent {
+~ EnemyIntentType enemyIntentType
+~ int count
+~ String intentMessage
++ EnemyIntentType getEnemyIntentType()
++ void setEnemyIntentType(EnemyIntentType)
++ int getCount()
++ void setCount(int)
++ String getIntentMessage()
++ void setIntentMessage(String)
++ String toString()
+}
+
+
+enum logic.card.Rarity {
++  BRONZE
++  SILVER
++  GOLD
+}
+
+class unit.Enemy {
+~ String name
+~ int hp
+~ int maxHp
+~ ArrayList<EnemyIntent> enemyIntentPattern
++ void setBeginPattern()
++ String toString()
+}
+
+
+enum unit.EnemyIntentType {
++  ATTACK
++  BLOCK
+}
+
+enum logic.buff.StarterBuff {
++  HUITZILOPOCHTLI
++  QUETZALCOATL
++  TLALOC
++  XIPE_TOTEC
+- String godName
+- String description
++ void apply(Player)
++ String getGodName()
++ String getDescription()
++ String toString()
+}
+
+
+interface logic.card.IExecuteable {
+~ void execute(Player,ArrayList<Enemy>)
+}
+
+class logic.card.Card {
+# int cost
+# String name
+# String description
+# Rarity rarity
+# CardType cardType
++ void execute(Player,ArrayList<Enemy>)
++ String toString()
++ int getCost()
++ String getName()
++ String getDescription()
++ Rarity getRarity()
++ CardType getCardType()
+}
+
+
+class logic.card.PowerCard {
+}
+enum logic.card.CardType {
++  ATTACK
++  SKILL
++  POWER
+}
+
+class unit.Player {
+- int currentEnergy
+- int maxEnergy
+- int block
+- int cacao
+- ArrayList<Card> deck
+- boolean hasXipeTotecBlessing
+- boolean freeCardNextTurn
+~ void setBeginCard()
++ String toString()
++ int getCurrentEnergy()
++ void setCurrentEnergy(int)
++ int getMaxEnergy()
++ void setMaxEnergy(int)
++ int getBlock()
++ void setBlock(int)
++ int getGold()
++ void setGold(int)
++ ArrayList<Card> getDeck()
++ void setDeck(ArrayList<Card>)
++ boolean hasXipeTotecBlessing()
++ void setHasXipeTotecBlessing(boolean)
++ boolean isFreeCardNextTurn()
++ void setFreeCardNextTurn(boolean)
+}
+
+
+class application.CombatFlow {
+- Player player
+- ArrayList<Enemy> enemies
+- int turnCount
+- boolean combatOver
+- ArrayList<Card> drawPile
+- ArrayList<Card> hand
+- ArrayList<Card> discardPile
+- {static} int HAND_SIZE
++ boolean startCombat()
+- void resetBlock()
+- void drawCards(int)
+- void shuffleDiscardIntoDraw()
+- void playerTurn()
+- boolean tryPlayCard(Card,int)
+- boolean isPlayable(Card)
+- void discardHand()
+- void enemyTurn()
+- void executeEnemyIntent(Enemy)
+- boolean checkPlayerDead()
+- boolean checkAllEnemiesDead()
+- void printHand()
++ int getTurnCount()
++ ArrayList<Card> getHand()
++ ArrayList<Card> getDrawPile()
++ ArrayList<Card> getDiscardPile()
+}
+
+
+enum logic.map.Direction {
++  LEFT
++  RIGHT
+}
+
+class logic.card.AttackCard {
+- int damage
++ void execute(Player,ArrayList<Enemy>)
++ int getDamage()
+}
+
+
+class application.GameManager {
++ {static} GameManager gameManager
+- Player player
+- ArrayList<Enemy> enemies
++ {static} GameManager getInstance()
++ Player getPlayer()
++ void setPlayer(Player)
++ ArrayList<Enemy> getEnemies()
++ void addEnemies(Enemy)
+}
+
+
+class logic.map.Pair {
+- A first
+- B second
++ B second()
++ A first()
+}
+
+
+abstract class unit.BaseUnit {
+- String name
+- int hp
+- int maxHp
++ String getName()
++ void setName(String)
++ int getMaxHp()
++ void setMaxHp(int)
++ int getHp()
++ void setHp(int)
+}
+
+
+class application.MapFlow {
+- Map map
+- Player player
+- int currentFloor
+- Pair<Integer,Integer> currentPosition
+- boolean runOver
+- {static} int VICTORY_X
+- {static} int VICTORY_Y
++ boolean startRun()
+- void displayMapStatus()
+- Pair<Integer,Integer> getPlayerMove()
+- boolean executeCombat(Room)
++ int getCurrentFloor()
++ Pair<Integer,Integer> getCurrentPosition()
+}
+
+
+enum logic.map.RoomType {
++  COMBAT
++  TRADE
++  TOTEM
++  TREASURE
++  GOD
++  START
+}
+
+class logic.card.SkillCard {
+# int block
++ void execute(Player,ArrayList<Enemy>)
++ int getBlock()
+}
+
+
+
+
+unit.BaseUnit <|-- unit.Enemy
+unit.BaseUnit <|-- unit.Player
+logic.card.Card <|-- logic.card.AttackCard
+logic.card.Card <|-- logic.card.SkillCard
+@enduml
