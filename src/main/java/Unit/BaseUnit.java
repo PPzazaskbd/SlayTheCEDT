@@ -5,9 +5,9 @@ public abstract class BaseUnit {
     private int hp;
     private int maxHp;
 
-    public BaseUnit(String name, int hp, int maxHp) {
+    public BaseUnit(String name, int maxHp) {
         this.name = name;
-        this.hp = hp;
+        this.hp = maxHp;
         this.maxHp = maxHp;
     }
 
@@ -24,7 +24,7 @@ public abstract class BaseUnit {
     }
 
     public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
+        this.maxHp = Math.max(maxHp,0);
     }
 
     public int getHp() {
@@ -32,6 +32,6 @@ public abstract class BaseUnit {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        this.hp = Math.max(hp,0);
     }
 }

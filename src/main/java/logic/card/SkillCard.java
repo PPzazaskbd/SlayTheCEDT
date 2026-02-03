@@ -1,9 +1,18 @@
+// === MODIFIED: java/logic/card/SkillCard.java ===
+
 package logic.card;
 
-import application.GameManager;
+import unit.Enemy;
+import unit.Player;
 
-public class SkillCard extends  Card{
+import java.util.ArrayList;
+
+/**
+ * SkillCard - Defensive/utility cards that add block or other effects
+ */
+public class SkillCard extends Card {
     protected int block;
+
     public SkillCard(
             int cost,
             String name,
@@ -14,15 +23,24 @@ public class SkillCard extends  Card{
     ) {
         super(cost, name, description, rarity, cardType);
         this.block = block;
-
     }
 
     @Override
-    public void execute() {
-        super.execute();
+    public void execute(Player player, ArrayList<Enemy> enemies) {
+        super.execute(player, enemies);
         System.out.println(this.description);
-        GameManager.getInstance().getPlayer().setBlock(GameManager.getInstance().getPlayer().getBlock()+this.block);
-        System.out.println(GameManager.getInstance().getPlayer().getBlock());
 
+        // Add block to player
+        player.setBlock(player.getBlock() + this.block);
+        System.out.println("Gained " + this.block + " block! Total block: " + player.getBlock());
     }
+
+
+
+
+    public int getBlock() {
+        return block;
+    }
+
+
 }

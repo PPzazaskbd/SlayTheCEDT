@@ -2,9 +2,9 @@ package logic.map;
 
 public enum RoomType {
     COMBAT,
-    SHOP,
-    REST,
+    TRADE,
+    TOTEM,
     TREASURE,
-    BOSS,
+    GOD,
     START
 }

@@ -1,52 +1,43 @@
 package logic.map;
 
+import unit.Enemy;
+
+import java.util.List;
+
 public class Room {
-    private   int leftCoordinate;
-    private int rightCoordinate;
-    private  RoomType type;
+    private final int leftCoordinate;
+    private final int rightCoordinate;
+    private final RoomType roomType;
+    private final List<Enemy> Enemys;
 
-    public Room(int l, int r) {
-        this.leftCoordinate = ;
-        this.floor = l+r;
-        this.type = RoomType.COMBAT;
+
+    public Room(int l, int r, RoomType roomType, List<Enemy> enemys) {
+        this.leftCoordinate = l ;
+        this.rightCoordinate = r;
+        this.roomType = roomType;
+        Enemys = enemys;
     }
 
-    public Room(int l, int r,RoomType roomType) {
-        this.roomCoordinate = new Pair<>(l,r);
-        this.floor = l+r;
-        this.type = roomType;
-    }
-
-    public Pair<Integer, Integer> getRoomCoordinate() {
-        return roomCoordinate;
-    }
 
     public int getFloor() {
-        return floor;
+        return this.getLeftCoordinate()+this.getRightCoordinate();
     }
 
-    public RoomType getType() {
-        return type;
+
+
+    public int getLeftCoordinate() {
+        return leftCoordinate;
     }
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "roomCoordinate=" + roomCoordinate +
-                ", floor=" + floor +
-                ", type=" + type +
-                '}';
+    public int getRightCoordinate() {
+        return rightCoordinate;
     }
 
-    public void setRoomCoordinate(Pair<Integer, Integer> roomCoordinate) {
-        this.roomCoordinate = roomCoordinate;
+    public RoomType getRoomType() {
+        return roomType;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-
-    public void setType(RoomType type) {
-        this.type = type;
+    public List<Enemy> getEnemys() {
+        return Enemys;
     }
 }

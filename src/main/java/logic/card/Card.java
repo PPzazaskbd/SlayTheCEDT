@@ -1,5 +1,12 @@
 package logic.card;
 
+import unit.BaseUnit;
+import unit.Enemy;
+import unit.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public  class Card {
     protected int cost;
     protected String name;
@@ -15,7 +22,7 @@ public  class Card {
         this.cardType = cardType;
     }
 
-    public void execute() {
+    public void execute(Player player, ArrayList<Enemy> enemies) {
         System.out.print("playing the card : ");
     }
 
@@ -28,5 +35,25 @@ public  class Card {
                 ", rarity=" + rarity +
                 ", cardType=" + cardType +
                 '}';
+    }
+    // Add this getter to Card.java
+    public int getCost() {
+        return cost;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
+    }
+
+    public CardType getCardType() {
+        return cardType;
     }
 }

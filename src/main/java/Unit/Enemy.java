@@ -12,7 +12,7 @@ public class Enemy extends BaseUnit {
 
 
     public Enemy( String name, int hp,int maxHp ) {
-        super(name,hp,maxHp);
+        super(name,maxHp);
         setBeginPattern();
         this.maxHp = maxHp;
         this.hp = hp;

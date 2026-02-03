@@ -28,7 +28,8 @@ public class GameManager {
         return enemies;
     }
 
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
+
+    public void addEnemies (Enemy enemy) {
+        this.getEnemies().add(enemy);
     }
 }
