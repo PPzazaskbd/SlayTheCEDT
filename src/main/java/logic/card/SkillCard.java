@@ -2,6 +2,7 @@
 
 package logic.card;
 
+import logic.DamageEngine;
 import unit.Enemy;
 import unit.Player;
 
@@ -30,12 +31,12 @@ public class SkillCard extends Card {
         super.execute(player, enemies);
         System.out.println(this.description);
 
-        // Add block to player
-        player.setBlock(player.getBlock() + this.block);
-        System.out.println("Gained " + this.block + " block! Total block: " + player.getBlock());
+        // CHANGED: Apply block with effect modifiers (Parched)
+        int blockGained = DamageEngine.applyBlockGain(player, this.block);
+        player.setBlock(player.getBlock() + blockGained);
+
+        System.out.println("Gained " + blockGained + " block! Total block: " + player.getBlock());
     }
-
-
 
 
     public int getBlock() {

@@ -1,5 +1,6 @@
 package application;
 
+import logic.DamageEngine;
 import logic.card.Card;
 import logic.card.AttackCard;
 import logic.effects.StatusEffect;
@@ -175,46 +176,31 @@ public class CombatFlow {
         System.out.println("\n--- ENEMY TURN ---");
         for (Enemy enemy : enemies) {
             if (enemy.getHp() <= 0) continue;
-
             triggerStatusHooks(enemy, "start");
 
-            // Replaced direct HP subtraction with applyDamage to use buffs/debuffs
+            // Use DamageEngine for enemy attacks
             int baseDamage = 5;
-            applyDamage(enemy, player, baseDamage);
+            DamageEngine.applyDamage(enemy, player, baseDamage);  // CHANGED
 
             triggerStatusHooks(enemy, "end");
-
             if (checkPlayerDead()) return;
         }
     }
 
-    /**
-     * Reusable Damage Engine.
-     * Use this in AttackCard.java and Enemy logic to calculate Inflamed/Cursed.
-     */
-    public static void applyDamage(BaseUnit source, BaseUnit target, int damage) {
-        // Source modifies damage (Inflamed)
-        for (StatusEffect e : source.getActiveEffects()) {
-            damage = e.modifyDamageDealt(damage);
-        }
-
-        // Target modifies damage received (Cursed)
-        for (StatusEffect e : target.getActiveEffects()) {
-            damage = e.modifyDamageReceived(damage);
-        }
-
-        int actualDmg = Math.max(0, damage - target.getBlock());
-        target.setBlock(Math.max(0, target.getBlock() - damage));
-        target.setHp(target.getHp() - actualDmg);
-
-        System.out.println(source.getName() + " deals " + damage + " DMG (" + actualDmg + " to HP) to " + target.getName());
-    }
 
     private void triggerStatusHooks(BaseUnit unit, String timing) {
+        ArrayList<StatusEffect> toRemove = new ArrayList<>();
         for (StatusEffect e : new ArrayList<>(unit.getActiveEffects())) {
             if (timing.equals("start")) e.onTurnStart(unit);
-            if (timing.equals("end")) e.onTurnEnd(unit);
+            if (timing.equals("end")) {
+                e.onTurnEnd(unit);
+                e.decreaseDuration();  // Tick down duration
+                if (e.getDuration() == 0 && e.getDuration() != -1) {
+                    toRemove.add(e);  // Mark for removal
+                }
+            }
         }
+        unit.getActiveEffects().removeAll(toRemove);  // Clean up expired
     }
 
     private void discardHand() {
