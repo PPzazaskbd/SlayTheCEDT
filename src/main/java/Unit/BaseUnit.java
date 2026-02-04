@@ -67,4 +67,21 @@ public abstract class BaseUnit {
     public void setActiveEffects(List<StatusEffect> activeEffects) {
         this.activeEffects = activeEffects;
     }
+
+    // Utility to get total stacks of a specific status by name
+    public int getStatusStacks(String statusName) {
+        for (StatusEffect e : activeEffects) {
+            if (e.getName().equals(statusName)) return e.getStacks();
+        }
+        return 0;
+    }
+
+
+    // Check if a specific status class exists (useful for Unyielding)
+    public boolean hasStatus(Class<? extends StatusEffect> statusClass) {
+        for (StatusEffect e : activeEffects) {
+            if (statusClass.isInstance(e)) return true;
+        }
+        return false;
+    }
 }
