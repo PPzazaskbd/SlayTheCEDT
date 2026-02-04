@@ -2,6 +2,7 @@
 
 package logic.card;
 
+import logic.DamageEngine;
 import unit.Enemy;
 import unit.Player;
 
@@ -22,18 +23,17 @@ public class AttackCard extends Card {
         this.damage = damage;
     }
 
+
     @Override
     public void execute(Player player, ArrayList<Enemy> enemies) {
         super.execute(player, enemies);
         System.out.println(this.description);
 
-        // Deal damage to first living enemy (simple targeting for now)
+        // Deal damage to first living enemy
         for (Enemy enemy : enemies) {
             if (enemy.getHp() > 0) {
-                int newHp = enemy.getHp() - this.damage;
-                enemy.setHp(newHp);
-                System.out.println("Dealt " + damage + " damage to " + enemy.getName() +
-                        "! HP: " + enemy.getHp());
+                // CHANGED: Use DamageEngine instead of direct HP subtraction
+                DamageEngine.applyDamage(player, enemy, this.damage);
                 break; // Only hit first enemy
             }
         }
