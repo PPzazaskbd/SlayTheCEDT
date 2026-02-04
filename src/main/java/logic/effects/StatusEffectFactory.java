@@ -7,21 +7,28 @@ package logic.effects;
 public class StatusEffectFactory {
 
     public static StatusEffect create(String name, int stacks, int duration) {
-        // Handle Aztec/Thematic names mapping to code classes if needed
-        // For now, mapping direct class names
-
         switch (name) {
+            case "Ancestry":
+                return new Ancestry(stacks, duration);
             case "Bleeding":
                 return new Bleeding(stacks, duration);
-            case "Inflamed":
-                return new Inflamed(stacks, duration);
             case "Cursed":
                 return new Cursed(stacks, duration);
             case "Farsighted":
                 return new Farsighted(stacks, duration);
-            // Add other effects here
+            case "Hollowed":
+                return new Hollowed(stacks, duration);
+            case "Inflamed":
+                return new Inflamed(stacks, duration);
+            case "Nourished":
+                return new Nourished(stacks, duration);
+            case "Parched":
+                return new Parched(stacks, duration);
+            case "Starving":
+                return new Starving(stacks, duration);
+            case "Unyielding":
+                return new Unyielding(stacks, duration);
             default:
-                // Fallback for effects that don't have the duration constructor yet
                 System.out.println("Warning: Effect " + name + " factory not fully implemented.");
                 return null;
         }

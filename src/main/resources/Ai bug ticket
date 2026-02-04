@@ -1,0 +1,53 @@
+Overall: yes, this is a sensible codebase direction. You’ve got a clear loop (Menu → Map → Combat), a centralized rules engine (`DamageEngine`), a hook-based status system, and now a clean way to author cards (`CardBuilder` + `CardEffect`). That’s the right architecture for “add lots of content quickly”.
+
+That said, in the current repomix there are a few issues that will bite you as soon as you start making more effect-cards.
+
+## Must-fix (logic bugs / features not actually working)
+
+1) Skill cards never apply their status effects
+- `AttackCard.execute()` calls `applyEffects(player, enemy)`.
+- `SkillCard.execute()` does NOT call `applyEffects(...)`.
+So any Skill you build with `.addEffect(...)` will silently do nothing (except block).
+
+2) `StatusEffectFactory` is missing most effects
+Right now it only supports: `Bleeding`, `Inflamed`, `Cursed`, `Farsighted`.
+But you also have: `Ancestry`, `Hollowed`, `Nourished`, `Parched`, `Starving`, `Unyielding`.
+If you try to build a card that adds those, you’ll get the warning and nothing is applied.
+
+3) Hollowed energy reduction currently gets cancelled
+In `CombatFlow.startCombat()` you do:
+- trigger start hooks (`Hollowed` reduces energy)
+- then immediately `player.setCurrentEnergy(player.getMaxEnergy())`
+That overwrites Hollowed’s effect. The “set energy to max” should happen before start-of-turn status hooks (or Hollowed needs to run after energy is set).
+
+4) Duration ticking semantics will feel “off” for some effects (example: Farsighted)
+You decrement duration at “end”.
+If you apply `Farsighted(1 turn)` during your turn, it will tick down at end-of-turn and disappear before the next draw → so it won’t ever give extra draw.
+This isn’t “wrong”, but you need to decide your rule:
+- durations tick at end-of-owner-turn always, OR
+- some effects tick at start, OR
+- “turn duration” means “number of upcoming turn starts”.
+
+Your current engine is consistent, but you’ll need to design durations for draw-type effects accordingly.
+
+5) Re-applying a status: stacks merge, but duration does not
+`BaseUnit.addStatus()` merges same-class effects by increasing stacks only.
+So if you apply “Bleeding 2 for 3 turns” twice, you’ll get more stacks but the duration won’t refresh/extend unless you add that rule.
+You should decide: refresh duration to max? add durations? keep original? (StS varies by effect.)
+
+## Important design notes (not urgent, but will matter)
+
+- You’re using `String effectName` in `CardEffect` and a `switch` factory. It’s fine for classwork, but it’s easy to typo and silently fail. An enum like `EffectType.BLEEDING` would make authoring safer.
+- You still have some “duplication smell”: `Enemy` has its own `hp/maxHp/name` fields separate from `BaseUnit`. That can cause confusing debug output (`toString()` might not match actual HP after damage).
+
+## UX: displaying durations to the player (what you asked earlier)
+Right now players can’t see active effects at all during combat besides the prints.
+A good minimal UI addition would be:
+- At the start of `[YOUR TURN]`, print a compact list of player effects like: `Bleeding(3,2t) Parched(1,∞)`
+- Maybe also print enemy effects when showing the enemy HP.
+
+Question for you (so we implement the right display): do you want duration shown as:
+- `∞` for permanent, and `Nt` for remaining turns, or
+- `duration:intensity` style like StS (ex: Weak shows duration only)?
+
+Fun fact: “Chīmalli” is the Nahuatl word for shield, and “Macuahuitl” is the obsidian-bladed club/sword—perfect names for your starter Strike/Defend equivalents.

@@ -61,10 +61,10 @@ public class CombatFlow {
                 System.out.println("[STATUS] Unyielding: Block preserved!");
             }
 
-            // Trigger Start Hooks (e.g., Hollowed energy reduction)
-            triggerStatusHooks(player, "start");
 
+            // Trigger Start Hooks (e.g., Hollowed energy reduction)
             player.setCurrentEnergy(player.getMaxEnergy());
+            triggerStatusHooks(player, "start");
 
             // Tangled: Farsighted draw logic
             int cardsToDraw = BASE_HAND_SIZE + player.getStatusStacks("Farsighted");
@@ -91,6 +91,12 @@ public class CombatFlow {
             if (checkPlayerDead()) {
                 System.out.println("\n=== DEFEAT ===");
                 return false;
+            }
+
+            // --- 5. Decrement durations ---
+            decrementDurations(player);
+            for (Enemy e : enemies) {
+                decrementDurations(e);
             }
         }
         return false;
@@ -189,18 +195,21 @@ public class CombatFlow {
 
 
     private void triggerStatusHooks(BaseUnit unit, String timing) {
-        ArrayList<StatusEffect> toRemove = new ArrayList<>();
         for (StatusEffect e : new ArrayList<>(unit.getActiveEffects())) {
             if (timing.equals("start")) e.onTurnStart(unit);
-            if (timing.equals("end")) {
-                e.onTurnEnd(unit);
-                e.decreaseDuration();  // Tick down duration
-                if (e.getDuration() == 0) {
-                    toRemove.add(e);  // Mark for removal
-                }
+            if (timing.equals("end")) e.onTurnEnd(unit);
+        }
+    }
+
+    private void decrementDurations(BaseUnit unit) {
+        ArrayList<StatusEffect> toRemove = new ArrayList<>();
+        for (StatusEffect e : unit.getActiveEffects()) {
+            e.decreaseDuration();
+            if (e.getDuration() == 0) {
+                toRemove.add(e);
             }
         }
-        unit.getActiveEffects().removeAll(toRemove);  // Clean up expired
+        unit.getActiveEffects().removeAll(toRemove);
     }
 
     private void discardHand() {

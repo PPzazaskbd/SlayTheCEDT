@@ -48,6 +48,12 @@ public class Player extends BaseUnit {
                     .description("Raise your shield. Gain 5 Block.")
                     .build());
         }
+        Card ODED = new CardBuilder("Obsidian Double Edged Dagger", CardType.ATTACK, Rarity.SILVER)
+                .cost(0)
+                .damage(9)
+                .addEffect("Bleeding",4,1, CardEffect.Target.SELF)
+                .description( "Deal 9 damage\n Gain 4 Bleeding")
+                .build();
         Collections.shuffle(deck);
     }
     @Override

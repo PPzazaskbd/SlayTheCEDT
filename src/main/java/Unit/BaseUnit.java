@@ -22,6 +22,10 @@ public abstract class BaseUnit {
         for (StatusEffect e : activeEffects) {
             if (e.getClass().equals(newEffect.getClass())) {
                 e.addStacks(newEffect.getStacks());
+                // Refresh duration to max (if new duration is longer)
+                if (newEffect.getDuration() > e.getDuration()) {
+                    e.setDuration(newEffect.getDuration());
+                }
                 return;
             }
         }
