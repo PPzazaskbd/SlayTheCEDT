@@ -8,12 +8,15 @@ public abstract class BaseUnit {
     private String name;
     private int hp;
     private int maxHp;
+    private int block;
     private List<StatusEffect> activeEffects = new ArrayList<>();
     public BaseUnit(String name, int maxHp) {
         this.name = name;
         this.hp = maxHp;
         this.maxHp = maxHp;
+        this.block = 0;
     }
+
 
     public void addStatus(StatusEffect newEffect) {
         for (StatusEffect e : activeEffects) {
@@ -47,5 +50,21 @@ public abstract class BaseUnit {
 
     public void setHp(int hp) {
         this.hp = Math.max(hp,0);
+    }
+
+    public int getBlock() {
+        return block;
+    }
+
+    public void setBlock(int block) {
+        this.block = block;
+    }
+
+    public List<StatusEffect> getActiveEffects() {
+        return activeEffects;
+    }
+
+    public void setActiveEffects(List<StatusEffect> activeEffects) {
+        this.activeEffects = activeEffects;
     }
 }
