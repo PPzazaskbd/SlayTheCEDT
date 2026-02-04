@@ -29,12 +29,15 @@ public class AttackCard extends Card {
         super.execute(player, enemies);
         System.out.println(this.description);
 
-        // Deal damage to first living enemy
         for (Enemy enemy : enemies) {
             if (enemy.getHp() > 0) {
-                // CHANGED: Use DamageEngine instead of direct HP subtraction
+                // 1. Deal Damage
                 DamageEngine.applyDamage(player, enemy, this.damage);
-                break; // Only hit first enemy
+
+                // 2. Apply Effects (Pass the enemy as the target)
+                applyEffects(player, enemy);
+
+                break; // Single target for now
             }
         }
     }
