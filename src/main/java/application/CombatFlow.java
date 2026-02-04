@@ -195,7 +195,7 @@ public class CombatFlow {
             if (timing.equals("end")) {
                 e.onTurnEnd(unit);
                 e.decreaseDuration();  // Tick down duration
-                if (e.getDuration() == 0 && e.getDuration() != -1) {
+                if (e.getDuration() == 0) {
                     toRemove.add(e);  // Mark for removal
                 }
             }
