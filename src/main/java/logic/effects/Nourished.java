@@ -5,6 +5,7 @@ import unit.BaseUnit;
 // logic/effects/Nourished.java
 public class Nourished extends StatusEffect {
     public Nourished(int stacks) { super("Nourished", stacks); }
+    public Nourished(int stacks, int duration) { super("Nourished", stacks, duration); }
     @Override
     public void onTurnEnd(BaseUnit owner) {
         if (owner instanceof unit.Player p) {

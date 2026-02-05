@@ -2,11 +2,7 @@
 
 package unit;
 
-import logic.card.Card;
-import logic.card.AttackCard;
-import logic.card.SkillCard;
-import logic.card.CardType;
-import logic.card.Rarity;
+import logic.card.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,37 +32,30 @@ public class Player extends BaseUnit {
      * Initialize starting deck: 5 Strikes + 5 Defends
      */
     void setBeginCard() {
-        // Add 5 Strike cards (Attack)
+        // 5 Macuahuitl (Strikes)
         for (int i = 0; i < 5; i++) {
-            AttackCard strike = new AttackCard(
-                    1,                      // cost
-                    "Strike",               // name
-                    "Deal 6 damage",        // description
-                    Rarity.BRONZE,          // rarity
-                    CardType.ATTACK,        // type
-                    6                       // damage
-            );
-            deck.add(strike);
+            deck.add(new CardBuilder("Strike", CardType.ATTACK, Rarity.BRONZE)
+                    .cost(1)
+                    .damage(6)
+                    .description("Strike with obsidian blade. Deal 6 damage.")
+                    .build());
         }
-
-        // Add 5 Defend cards (Skill)
+        // 5 Chimalli (Defends)
         for (int i = 0; i < 5; i++) {
-            SkillCard defend = new SkillCard(
-                    1,                      // cost
-                    "Defend",               // name
-                    "Gain 5 block",         // description
-                    Rarity.BRONZE,          // rarity
-                    CardType.SKILL,         // type
-                    5                       // block
-            );
-            deck.add(defend);
+            deck.add(new CardBuilder("Shield", CardType.SKILL, Rarity.BRONZE)
+                    .cost(1)
+                    .block(5)
+                    .description("Raise your shield. Gain 5 Block.")
+                    .build());
         }
-
-        // Shuffle the deck
+        Card ODED = new CardBuilder("Obsidian Double Edged Dagger", CardType.ATTACK, Rarity.SILVER)
+                .cost(0)
+                .damage(9)
+                .addEffect("Bleeding",4,1, CardEffect.Target.SELF)
+                .description( "Deal 9 damage\n Gain 4 Bleeding")
+                .build();
         Collections.shuffle(deck);
-        System.out.println("Starting deck initialized: 5 Strikes + 5 Defends (10 cards total)");
     }
-
     @Override
     public String toString() {
         StringBuilder answer = new StringBuilder(

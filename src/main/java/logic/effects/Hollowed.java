@@ -4,6 +4,7 @@ import unit.BaseUnit;
 
 public class Hollowed extends StatusEffect {
     public Hollowed(int stacks) { super("Hollowed", stacks); }
+    public Hollowed(int stacks, int duration) { super("Hollowed", stacks, duration); }
     @Override
     public void onTurnStart(BaseUnit owner) {
         if (owner instanceof unit.Player p) {

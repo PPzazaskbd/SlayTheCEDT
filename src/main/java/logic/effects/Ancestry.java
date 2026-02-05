@@ -4,6 +4,7 @@ import unit.BaseUnit;
 
 public class Ancestry extends StatusEffect {
     public Ancestry(int stacks) { super("Ancestry", stacks); }
+    public Ancestry(int stacks, int duration) { super("Ancestry", stacks, duration); }
     @Override
     public void onAttackPlayed(BaseUnit owner) {
         // CHANGED: Use DamageEngine to respect Parched

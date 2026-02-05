@@ -4,6 +4,7 @@ import unit.BaseUnit;
 
 public class Starving extends StatusEffect {
     public Starving(int stacks) { super("Starving", stacks); }
+    public Starving(int stacks, int duration) { super("Starving", stacks, duration); }
     @Override
     public void onTurnEnd(BaseUnit owner) {
         if (owner instanceof unit.Player) {

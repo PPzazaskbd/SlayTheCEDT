@@ -13,6 +13,7 @@ public  class Card {
     protected String description;
     protected Rarity rarity;
     protected CardType cardType;
+    protected List<CardEffect> effects = new ArrayList<>();
 
     public Card(int cost, String name, String description, Rarity rarity, CardType cardType) {
         this.cost = cost;
@@ -20,6 +21,25 @@ public  class Card {
         this.description = description;
         this.rarity = rarity;
         this.cardType = cardType;
+    }
+
+    protected void applyEffects(unit.BaseUnit self, unit.BaseUnit target) {
+        for (CardEffect effect : effects) {
+            unit.BaseUnit actualTarget = (effect.target() == CardEffect.Target.SELF) ? self : target;
+
+            if (actualTarget != null) {
+                logic.effects.StatusEffect status = logic.effects.StatusEffectFactory.create(
+                        effect.effectName(),
+                        effect.stacks(),
+                        effect.duration()
+                );
+
+                if (status != null) {
+                    actualTarget.addStatus(status);
+                    System.out.println("Applied " + effect.effectName() + " to " + actualTarget.getName());
+                }
+            }
+        }
     }
 
     public void execute(Player player, ArrayList<Enemy> enemies) {
@@ -35,6 +55,10 @@ public  class Card {
                 ", rarity=" + rarity +
                 ", cardType=" + cardType +
                 '}';
+    }
+
+    public void setEffects(List<CardEffect> effects) {
+        this.effects = effects;
     }
     // Add this getter to Card.java
     public int getCost() {
