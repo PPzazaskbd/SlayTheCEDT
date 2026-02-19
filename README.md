@@ -1,4 +1,4 @@
-**This recent update s of a repo has been moved to private repository**
+**The recent updates of a repo has been moved to private repository**
 
 Slay the CEDT(waiting [for a better name](https://youtu.be/Xq-knHXSKYY?si=UTQraGgYaVNDPX0I))
 
